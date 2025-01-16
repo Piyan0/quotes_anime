@@ -1,14 +1,7 @@
 <template>
   <div :style="{'background-color': color.card_color, color: color.text_color, 'border-bottom': `2px solid ${color.border_color}`}" style="max-width: 400px; min-width: 200px" class="gap-2 p-4 rounded-2">
     <div class="fol gap-1 jen alen">
-      <UseImage style="width: 60px; height: 60px; border: 1px solid gray" :src="props.image" class=" rounded-1">
-        <template #loading>
-          <div style="width: 60px; height: 60px" class="force-center">
-            <img width="32" src="res/load.svg" alt="" />
-          </div>
-        </template>
-      </UseImage>
-
+      <img ref="avatar" width="60" height="60" class="rounded-2 " src="" alt="" />
       <p :style="{color: color.name_color}" class="f-8">Anime Quotes</p>
     </div>
     <div class="fow text-center my-2">
@@ -30,12 +23,12 @@
 <!-- -->
 
 <script setup>
-  import {ref, onMounted} from "vue"
+  import {ref, onMounted, useTemplateRef} from "vue"
   import {UseImage} from "@vueuse/components"
   import {useColor} from "@/state/usecolor.js"
-  const emits= defineEmits(['anjay_mabar'])
+  const emits = defineEmits(["image_loaded"])
   const props = defineProps(["quotes_data", "image", "character_name"])
-
+  const avatar = useTemplateRef("avatar")
   const {current_color: color, update_color} = useColor()
 
   var quotes = {
@@ -58,8 +51,20 @@
     }
     quote.value = quotes[current_language]
   }
+
+  async function _ready() {
+    var img = new Image()
+    img.src = props.image
+    await new Promise(res => {
+      img.onload = res
+    })
+    emits("image_loaded")
+    avatar.value.src = img.src
+    
+  }
   
   onMounted(() => {
+    _ready()
     quotes = props.quotes_data
     set_text("id")
   })
