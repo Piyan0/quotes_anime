@@ -40,7 +40,7 @@
   }
 
   async function _ready() {
-    axios.get("http://localhost:5000").then(data => {
+    axios.get("https://api-quotes-anime.vercel.app/").then(data => {
       quotes_data.character_name.value = data.data.character_name
       quotes_data.quotes_idn.value = data.data.quotes_idn
       quotes_data.quotes_en.value = data.data.quotes_en
