@@ -1,5 +1,5 @@
 {
-  "name": "image_loader",
+  "name": "QuotesAnime",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,6 +7,9 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@vueuse/components": "^12.4.0",
+    "@vueuse/core": "^12.4.0",
+    "axios": "^1.7.9",
     "vue": "^3.2.13"
   },
   "devDependencies": {
